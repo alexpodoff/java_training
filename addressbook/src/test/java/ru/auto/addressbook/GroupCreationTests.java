@@ -36,5 +36,6 @@ public class GroupCreationTests {
     wd.findElement(By.name("group_footer")).sendKeys("test3");
     wd.findElement(By.name("submit")).click();
     wd.findElement(By.linkText("group page")).click();
+    wd.findElement(By.linkText("Logout")).click();
   }
 }
