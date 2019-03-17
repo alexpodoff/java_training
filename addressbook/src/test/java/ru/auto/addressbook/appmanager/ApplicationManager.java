@@ -1,21 +1,19 @@
-package ru.auto.addressbook;
+package ru.auto.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeMethod;
+import ru.auto.addressbook.model.GroupData;
 
 import java.util.concurrent.TimeUnit;
 
-public class BaseTest {
+public class ApplicationManager {
     public FirefoxDriver wd;
 
-    @BeforeMethod
-    public void setUp() {
-      wd = new FirefoxDriver();
-      wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-      wd.get("http://localhost/addressbook/");
-      login("admin", "secret");
+    public void init() {
+        wd = new FirefoxDriver();
+        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        wd.get("http://localhost/addressbook/");
+        login("admin", "secret");
     }
 
     private void login(String username, String password) {
@@ -31,15 +29,15 @@ public class BaseTest {
       wd.findElement(By.linkText("Logout")).click();
     }
 
-    protected void returnToGroupPage() {
+    public void returnToGroupPage() {
       wd.findElement(By.linkText("group page")).click();
     }
 
-    protected void submitGroupCreation() {
+    public void submitGroupCreation() {
       wd.findElement(By.name("submit")).click();
     }
 
-    protected void fillGroupForm(GroupData groupData) {
+    public void fillGroupForm(GroupData groupData) {
       wd.findElement(By.name("group_name")).click();
       wd.findElement(By.name("group_name")).clear();
       wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
@@ -51,25 +49,24 @@ public class BaseTest {
       wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
     }
 
-    protected void initGroupCreation() {
+    public void initGroupCreation() {
       wd.findElement(By.name("new")).click();
     }
 
-    protected void gotoGroupPage() {
+    public void gotoGroupPage() {
       wd.findElement(By.linkText("groups")).click();
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-      logout();
-      wd.quit();
+    public void stop() {
+        logout();
+        wd.quit();
     }
 
-    protected void deleteSelectedGroups() {
+    public void deleteSelectedGroups() {
       wd.findElement(By.name("delete")).click();
     }
 
-    protected void selectGroup() {
+    public void selectGroup() {
       wd.findElement(By.name("selected[]")).click();
     }
 }
