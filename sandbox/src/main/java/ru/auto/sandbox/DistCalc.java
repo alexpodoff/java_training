@@ -12,14 +12,12 @@ public class DistCalc {
         Point second = new Point(3.0, 5.0);
 
         // calculating distance with class method
-        double dist1 = Point.distance(first, second);
-        System.out.println("Distance with class Point method is: " + dist1);
+        System.out.println("Distance with class Point method is: " + first.distance(second));
 
-        // calculating distance with static method
         Point third = new Point(2.0, 4.0);
         Point forth = new Point(4.2, 5.0);
-        double dist2 = distance(third, forth);
-        System.out.println("Distance with static Point method is: " + dist2);
 
+        // calculating distance with static method
+        System.out.println("Distance with static Point method is: "  + distance(third, forth));
     }
 }
