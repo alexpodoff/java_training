@@ -27,4 +27,11 @@ public class ContactHelper extends BaseHelper {
         click(By.linkText("add new"));
     }
 
+    public void selectContactById(int id) {
+        click(By.cssSelector("input[value='" + id + "']"));
+        }
+
+    public void deleteContact() {
+        click(By.xpath("//input[@value='Delete']"));
+    }
 }

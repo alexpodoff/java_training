@@ -17,4 +17,7 @@ public class NavigationHelper extends BaseHelper {
         click(By.linkText("home"));
     }
 
+    public void confirmAlert() {
+        wd.switchTo().alert().accept();
+    }
 }
