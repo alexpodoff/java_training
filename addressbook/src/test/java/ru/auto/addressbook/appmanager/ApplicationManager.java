@@ -1,19 +1,36 @@
 package ru.auto.addressbook.appmanager;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import sun.plugin2.util.BrowserType;
 
 import java.util.concurrent.TimeUnit;
 
+
 public class ApplicationManager {
 
-    FirefoxDriver wd;
+    WebDriver wd;
+    private int driver;
 
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
     private ContactHelper contactHelper;
 
+    public ApplicationManager(int driver) {
+        this.driver = driver;
+    }
+
     public void init() {
+        if (driver == BrowserType.MOZILLA) {
+            wd = new FirefoxDriver();
+        } else if (driver == BrowserType.DEFAULT) {
+            wd = new ChromeDriver();
+        } else if (driver == BrowserType.INTERNET_EXPLORER) {
+            wd = new InternetExplorerDriver();
+        }
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/");
