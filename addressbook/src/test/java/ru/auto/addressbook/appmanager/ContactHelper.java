@@ -31,6 +31,10 @@ public class ContactHelper extends BaseHelper {
         click(By.cssSelector("input[value='" + id + "']"));
         }
 
+    public void selectFirstContact() {
+        click(By.name("selected[]"));
+    }
+
     public void deleteContact() {
         click(By.xpath("//input[@value='Delete']"));
     }
