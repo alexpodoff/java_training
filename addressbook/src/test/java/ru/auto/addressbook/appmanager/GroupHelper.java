@@ -62,4 +62,10 @@ public class GroupHelper extends BaseHelper {
         submitGroupModification();
         returnToGroupPage();
     }
+
+    public void deleteGroup() {
+        selectGroup();
+        deleteSelectedGroups();
+        returnToGroupPage();
+    }
 }
