@@ -1,5 +1,7 @@
 package ru.auto.addressbook.model;
 
+import org.openqa.selenium.By;
+
 import java.util.Objects;
 
 public class GroupData {
@@ -47,4 +49,14 @@ public class GroupData {
         return Objects.hash(name);
     }
 
+    @Override
+    public String toString() {
+        return "GroupData{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
 }

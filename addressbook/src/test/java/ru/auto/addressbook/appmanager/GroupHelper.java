@@ -36,8 +36,12 @@ public class GroupHelper extends BaseHelper {
         click(By.name("delete"));
     }
 
-    public void selectGroup() {
+    public void selectFirstGroup() {
         click(By.name("selected[]"));
+    }
+
+    public void selectGroupByIndex(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void initGroupModification() {
@@ -60,7 +64,6 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void modifyGroup(GroupData group) {
-        selectGroup();
         initGroupModification();
         fillGroupForm(group);
         submitGroupModification();
@@ -68,12 +71,11 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void deleteGroup() {
-        selectGroup();
         deleteSelectedGroups();
         returnToGroupPage();
     }
 
-    public int count() {
+    public int getGroupCount() {
         return wd.findElements(By.name("selected[]")).size();
     }
 
@@ -87,4 +89,5 @@ public class GroupHelper extends BaseHelper {
         }
         return groups;
     }
+
 }
