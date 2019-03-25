@@ -2,7 +2,11 @@ package ru.auto.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.auto.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends BaseHelper {
 
@@ -31,6 +35,10 @@ public class ContactHelper extends BaseHelper {
         click(By.cssSelector("input[value='" + id + "']"));
         }
 
+    public void selectContactByIndex(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
+    }
+
     public void selectFirstContact() {
         click(By.name("selected[]"));
     }
@@ -53,8 +61,15 @@ public class ContactHelper extends BaseHelper {
         submitContactCreation();
     }
 
-    public void modifyContact(ContactData contact) {
+    public void modifyFirstContact(ContactData contact) {
         selectFirstContact();
+        initContactModification();
+        fillContactForm(contact);
+        confirmContactModification();
+    }
+
+    public void modifyContactByIndex(ContactData contact, int index) {
+        selectContactByIndex(index);
         initContactModification();
         fillContactForm(contact);
         confirmContactModification();
@@ -65,7 +80,25 @@ public class ContactHelper extends BaseHelper {
         deleteContact();
     }
 
+    public void deleteContactByIndex(int index) {
+        selectContactByIndex(index);
+        deleteContact();
+    }
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<>();
+      //  List<WebElement> elements = wd.findElements(By.name("selected[]"));
+        List<WebElement> rows = wd.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            List<WebElement> cells = row.findElements(By.tagName("td"));
+            String name = cells.get(2).getText();
+            String lastname = cells.get(1).getText();
+            ContactData contact = new ContactData(name, lastname, null, null, null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
