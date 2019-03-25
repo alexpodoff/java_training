@@ -1,13 +1,13 @@
 package ru.auto.addressbook.tests;
 
+import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import ru.auto.addressbook.appmanager.ApplicationManager;
-import sun.plugin2.util.BrowserType;
 
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager(BrowserType.MOZILLA);
+    protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
     @BeforeMethod
     public void setUp() {
