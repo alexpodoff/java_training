@@ -28,6 +28,15 @@ public class ContactData {
         this.email = email;
     }
 
+    public ContactData(String firstname, String lastname) {
+        this.id = Integer.MAX_VALUE;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = "some address";
+        this.homephone = "123123123";
+        this.email = "random@email.ok";
+    }
+
     public String getFirstname() {
         return firstname;
     }
