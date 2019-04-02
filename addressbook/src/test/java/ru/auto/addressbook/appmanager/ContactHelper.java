@@ -59,7 +59,7 @@ public class ContactHelper extends BaseHelper {
         click(By.name("update"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
@@ -72,7 +72,7 @@ public class ContactHelper extends BaseHelper {
         confirmContactModification();
     }
 
-    public void modifyContactByIndex(ContactData contact, int index) {
+    public void modifyByIndex(ContactData contact, int index) {
         selectContactByIndex(index);
         initContactModificationByIndex(index);
         fillContactForm(contact);
@@ -84,7 +84,7 @@ public class ContactHelper extends BaseHelper {
         deleteContact();
     }
 
-    public void deleteContactByIndex(int index) {
+    public void deleteByIndex(int index) {
         selectContactByIndex(index);
         deleteContact();
     }
@@ -92,7 +92,7 @@ public class ContactHelper extends BaseHelper {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> rows = wd.findElements(By.name("entry"));
         for (WebElement row : rows) {
