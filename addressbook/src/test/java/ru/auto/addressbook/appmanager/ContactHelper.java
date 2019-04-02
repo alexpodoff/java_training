@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import ru.auto.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -35,24 +37,12 @@ public class ContactHelper extends BaseHelper {
         click(By.cssSelector("input[value='" + id + "']"));
         }
 
-    public void selectContactByIndex(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
-    }
-
-    public void selectFirstContact() {
-        click(By.name("selected[]"));
-    }
-
     public void deleteContact() {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void initContactModification() {
-        click(By.xpath("//img[@alt='Edit']"));
-    }
-
-    public void initContactModificationByIndex(int index) {
-        wd.findElement(By.xpath("//tr[" + (index + 2) + "]/td[8]/a/img")).click();
+    public void initContactModificationById(int id) {
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
     public void confirmContactModification() {
@@ -65,43 +55,33 @@ public class ContactHelper extends BaseHelper {
         submitContactCreation();
     }
 
-    public void modifyFirstContact(ContactData contact) {
-        selectFirstContact();
-        initContactModification();
+    public void modifyById(ContactData contact) {
+        initContactModificationById(contact.getId());
         fillContactForm(contact);
         confirmContactModification();
     }
 
-    public void modifyByIndex(ContactData contact, int index) {
-        selectContactByIndex(index);
-        initContactModificationByIndex(index);
-        fillContactForm(contact);
-        confirmContactModification();
-    }
-    
-    public void deleteFirstContact() {
-        selectFirstContact();
+    public void deleteById(ContactData contact) {
+        selectContactById(contact.getId());
         deleteContact();
     }
 
-    public void deleteByIndex(int index) {
-        selectContactByIndex(index);
-        deleteContact();
-    }
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<>();
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
         List<WebElement> rows = wd.findElements(By.name("entry"));
         for (WebElement row : rows) {
             List<WebElement> cells = row.findElements(By.tagName("td"));
+            int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
             String name = cells.get(2).getText();
             String lastname = cells.get(1).getText();
-            ContactData contact = new ContactData().withFirstname(name).withLastname(lastname);
+            ContactData contact = new ContactData().withId(id).withFirstname(name).withLastname(lastname);
             contacts.add(contact);
         }
         return contacts;
     }
+
 }

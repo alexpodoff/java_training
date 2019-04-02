@@ -5,15 +5,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.auto.addressbook.model.ContactData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
         app.goTO().homePage();
-        if (app.contact().list().size() == 0) {
+        if (app.contact().all().size() == 0) {
             app.contact().create(new ContactData()
                             .withFirstname("test6")
                             .withLastname("test66")
@@ -26,24 +25,21 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testModificationContcact() throws Exception {
         app.goTO().homePage();
-        List<ContactData> before = app.contact().list();
-        int index = before.size() - 1;
+        Set<ContactData> before = app.contact().all();
+        ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData()
-                .withFirstname("test1")
+                .withFirstname("test33331")
                 .withLastname("test2")
                 .withAddress("aaa bbb ccc")
                 .withHomephone("12345678")
                 .withEmail("omg@my.dom");
-        app.contact().modifyByIndex(contact, index);
+        app.contact().modifyById(modifiedContact);
         app.goTO().homePage();
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(index);
-        before.add(contact);
-        Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
-        before.sort(byId);
-        after.sort(byId);
+        before.remove(contact);
+        before.add(modifiedContact);
         Assert.assertEquals(before, after);
     }
 }
