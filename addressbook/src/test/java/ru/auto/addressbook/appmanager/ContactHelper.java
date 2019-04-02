@@ -99,7 +99,7 @@ public class ContactHelper extends BaseHelper {
             List<WebElement> cells = row.findElements(By.tagName("td"));
             String name = cells.get(2).getText();
             String lastname = cells.get(1).getText();
-            ContactData contact = new ContactData(name, lastname);
+            ContactData contact = new ContactData().withFirstname(name).withLastname(lastname);
             contacts.add(contact);
         }
         return contacts;
