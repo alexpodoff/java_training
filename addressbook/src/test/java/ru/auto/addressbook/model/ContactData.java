@@ -9,6 +9,16 @@ public class ContactData {
     private String address;
     private String homephone;
     private String email;
+    private String mobilephone;
+    private String workphone;
+
+    public String getMobilephone() {
+        return mobilephone;
+    }
+
+    public String getWorkphone() {
+        return workphone;
+    }
 
     public String getFirstname() {
         return firstname;
@@ -59,6 +69,16 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withMobilephone(String mobilephone) {
+        this.mobilephone = mobilephone;
+        return this;
+    }
+
+    public ContactData withWorkphone(String workphone) {
+        this.workphone = workphone;
+        return this;
+    }
+
     public ContactData withEmail(String email) {
         this.email = email;
         return this;
@@ -87,4 +107,5 @@ public class ContactData {
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
+
 }
