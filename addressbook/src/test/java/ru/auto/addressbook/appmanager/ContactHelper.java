@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.auto.addressbook.model.ContactData;
 import ru.auto.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -53,25 +51,34 @@ public class ContactHelper extends BaseHelper {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
+        contactCache = null;
     }
 
     public void modifyById(ContactData contact) {
         initContactModificationById(contact.getId());
         fillContactForm(contact);
         confirmContactModification();
+        contactCache = null;
     }
 
     public void deleteById(ContactData contact) {
         selectContactById(contact.getId());
         deleteContact();
+        contactCache = null;
     }
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
+    private Contacts contactCache = null;
+
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+
+        contactCache = new Contacts();
         List<WebElement> rows = wd.findElements(By.name("entry"));
         for (WebElement row : rows) {
             List<WebElement> cells = row.findElements(By.tagName("td"));
@@ -79,9 +86,9 @@ public class ContactHelper extends BaseHelper {
             String name = cells.get(2).getText();
             String lastname = cells.get(1).getText();
             ContactData contact = new ContactData().withId(id).withFirstname(name).withLastname(lastname);
-            contacts.add(contact);
+            contactCache.add(contact);
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 
 }
