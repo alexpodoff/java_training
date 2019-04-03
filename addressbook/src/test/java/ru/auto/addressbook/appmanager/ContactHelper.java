@@ -71,11 +71,16 @@ public class ContactHelper extends BaseHelper {
         initContactModificationById(contact.getId());
         String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
         String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getAttribute("value");
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
+                .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3)
                 .withHomephone(home).withMobilephone(mobile).withWorkphone(work);
     }
 
@@ -101,14 +106,16 @@ public class ContactHelper extends BaseHelper {
             int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
             String name = cells.get(2).getText();
             String lastname = cells.get(1).getText();
-            String[] phones = cells.get(5).getText().split("\n");
+            String address = cells.get(3).getText();
+            String allEmails = cells.get(4).getText();
+            String allPhones = cells.get(5).getText();
             ContactData contact = new ContactData()
                     .withId(id)
                     .withFirstname(name)
                     .withLastname(lastname)
-                    .withHomephone(phones[0])
-                    .withMobilephone(phones[1])
-                    .withWorkphone(phones[2]);
+                    .withAddress(address)
+                    .withAllEmails(allEmails)
+                    .withAllPhones(allPhones);
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
