@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressbook.iml" filepath="$PROJECT_DIR$/.idea/modules/addressbook.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressbook.main.iml" filepath="$PROJECT_DIR$/.idea/modules/addressbook.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressbook.test.iml" filepath="$PROJECT_DIR$/.idea/modules/addressbook.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sandbox.iml" filepath="$PROJECT_DIR$/.idea/modules/sandbox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sandbox.iml" filepath="$PROJECT_DIR$/.idea/modules/sandbox.iml" group="sandbox" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sandbox_main.iml" filepath="$PROJECT_DIR$/.idea/modules/sandbox_main.iml" group="sandbox" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sandbox_test.iml" filepath="$PROJECT_DIR$/.idea/modules/sandbox_test.iml" group="sandbox" />
     </modules>
