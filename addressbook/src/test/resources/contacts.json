@@ -1,0 +1,20 @@
+[
+  {
+    "firstname": "test 0",
+    "lastname": "lastname 0",
+    "address": "some test address",
+    "homephone": "12345678"
+  },
+  {
+    "firstname": "test 1",
+    "lastname": "lastname 1",
+    "address": "some test address",
+    "homephone": "12345678"
+  },
+  {
+    "firstname": "test 2",
+    "lastname": "lastname 2",
+    "address": "some test address",
+    "homephone": "12345678"
+  }
+]

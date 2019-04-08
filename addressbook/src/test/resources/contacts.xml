@@ -1,0 +1,20 @@
+<list>
+  <contact>
+    <firstname>test 0</firstname>
+    <lastname>lastname 0</lastname>
+    <address>some test address</address>
+    <homephone>12345678</homephone>
+  </contact>
+  <contact>
+    <firstname>test 1</firstname>
+    <lastname>lastname 1</lastname>
+    <address>some test address</address>
+    <homephone>12345678</homephone>
+  </contact>
+  <contact>
+    <firstname>test 2</firstname>
+    <lastname>lastname 2</lastname>
+    <address>some test address</address>
+    <homephone>12345678</homephone>
+  </contact>
+</list>
