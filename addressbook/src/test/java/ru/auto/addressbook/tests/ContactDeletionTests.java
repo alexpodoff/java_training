@@ -7,7 +7,7 @@ import ru.auto.addressbook.model.Contacts;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ContcactDeletionTests extends TestBase {
+public class ContactDeletionTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
