@@ -1,6 +1,5 @@
 package ru.auto.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.auto.addressbook.model.GroupData;

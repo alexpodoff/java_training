@@ -3,8 +3,11 @@ package ru.auto.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.auto.addressbook.model.ContactData;
 import ru.auto.addressbook.model.Contacts;
+import ru.auto.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class ContactHelper extends BaseHelper {
         click(By.name("submit"));
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("address"), contactData.getAddress());
@@ -26,6 +29,34 @@ public class ContactHelper extends BaseHelper {
         type(By.name("email"), contactData.getEmail());
         //attach(By.name("photo"), contactData.getPhoto());
 
+        if (creation) {
+            if (contactData.getGroups().size() > 0) {
+                Assert.assertTrue(contactData.getGroups().size() == 1);
+                new Select(wd.findElement(By.name("new_group")))
+                        .selectByVisibleText(contactData.getGroups().iterator().next().getName());
+            }
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
+    }
+
+    public void addToGroup(ContactData contact, GroupData group) {
+
+            selectContactById(contact.getId());
+      //      wd.findElement(By.name("to_group")).click();
+            new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+      //      wd.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Select all'])[1]/following::option[2]")).click();
+            wd.findElement(By.name("add")).click();
+        }
+
+    public void delFromGroup(ContactData contact, GroupData group) {
+        wd.findElement(By.name("group")).click();
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+        wd.findElement(By.id(String.valueOf(contact.getId()))).click();
+        wd.findElement(By.name("remove")).click();
+        wd.findElement(By.linkText("home")).click();
+        wd.findElement(By.name("group")).click();
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText("[all]");
     }
 
     public void initContactCreation() {
@@ -50,14 +81,14 @@ public class ContactHelper extends BaseHelper {
 
     public void create(ContactData contact) {
         initContactCreation();
-        fillContactForm(contact);
+        fillContactForm(contact, true);
         submitContactCreation();
         contactCache = null;
     }
 
     public void modifyById(ContactData contact) {
         initContactModificationById(contact.getId());
-        fillContactForm(contact);
+        fillContactForm(contact, false);
         confirmContactModification();
         contactCache = null;
     }

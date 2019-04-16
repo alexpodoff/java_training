@@ -3,10 +3,13 @@ package ru.auto.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.auto.addressbook.model.ContactData;
 import ru.auto.addressbook.model.Contacts;
+import ru.auto.addressbook.model.GroupData;
+import ru.auto.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -55,11 +58,19 @@ public class ContactCreationTests extends TestBase {
         }
     }
 
+    @BeforeMethod
+    public void ensurePreconditions() {
+        if (app.db().groups().size() == 0) {
+            app.group().create(new GroupData().withName("test6").withHeader("test66").withFooter("test666"));
+        }
+    }
+
     @Test(dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contact) {
+        Groups groups = app.db().groups();
         Contacts before = app.db().contacts();
         app.goTO().homePage();
-        app.contact().create(contact);
+        app.contact().create(contact.inGroup(groups.iterator().next()));
         app.goTO().homePage();
         assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.db().contacts();
