@@ -17,7 +17,6 @@ public class ApplicationManager {
 
     private final Properties properties;
     WebDriver wd;
-
     private String browser;
 
     public ApplicationManager(String browser) {
@@ -49,4 +48,11 @@ public class ApplicationManager {
         wd.quit();
     }
 
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
+    public HttpSession newSession() {
+        return new HttpSession(this);
+    }
 }
