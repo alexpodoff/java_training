@@ -34,7 +34,7 @@ public class MailHelper {
         throw new Error("No mail :(");
     }
 
-    public static MailMessage toModelMail(WiserMessage m) {
+    private static MailMessage toModelMail(WiserMessage m) {
         try {
             MimeMessage mm = m.getMimeMessage();
             return new MailMessage(mm.getAllRecipients()[0].toString(), (String) mm.getContent());
