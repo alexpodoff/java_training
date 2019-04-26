@@ -17,6 +17,7 @@ public class ApplicationManager {
 
     private final Properties properties;
     private RegistrationHelper registrationHelper;
+    private MailHelper mailHelper;
     private WebDriver wd;
     private String browser;
     private FtpHelper ftp;
@@ -76,6 +77,13 @@ public class ApplicationManager {
             registrationHelper = new RegistrationHelper(this);
         }
         return registrationHelper;
+    }
+
+    public MailHelper mail() {
+        if (mailHelper == null) {
+            mailHelper = new MailHelper(this);
+        }
+        return mailHelper;
     }
 
 }
