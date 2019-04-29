@@ -4,6 +4,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.auto.mantis.model.MailMessage;
+import ru.auto.mantis.model.MantisUser;
 import ru.lanwen.verbalregex.VerbalExpression;
 
 import javax.mail.MessagingException;
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.testng.Assert.assertTrue;
 
 public class PasswordChangeTests extends TestBase {
+
     @BeforeMethod
     public void startMailServer() {
         app.mail().start();
@@ -21,7 +23,7 @@ public class PasswordChangeTests extends TestBase {
 
     @Test
     public void testPasswordChange() throws MessagingException, IOException {
-        String user = "test_reset";
+        MantisUser user = getRandomUser();
         String password = "new_password";
         String email = String.format("%s@localhost", user);
         app.ui().adminLogin();
@@ -29,7 +31,7 @@ public class PasswordChangeTests extends TestBase {
         List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
         String confirmationLink = findConfirmationLink(mailMessages, email);
         app.registration().finish(confirmationLink, password);
-        assertTrue(app.newSession().login(user, password));
+        assertTrue(app.newSession().login(user.getName(), password));
     }
 
 

@@ -1,6 +1,7 @@
 package ru.auto.mantis.appmanager;
 
 import org.openqa.selenium.By;
+import ru.auto.mantis.model.MantisUser;
 
 public class UiHelper extends BaseHelper {
 
@@ -15,11 +16,11 @@ public class UiHelper extends BaseHelper {
         click(By.xpath("//input[@value='Login']"));
     }
 
-    public void resetUsersPass(String user) {
+    public void resetUsersPass(MantisUser user) {
         wd.get("http://localhost/mantisbt-1.3.4/my_view_page.php");
         wd.findElement(By.linkText("Manage")).click();
         wd.findElement(By.linkText("Manage Users")).click();
-        wd.findElement(By.linkText(user)).click();
+        wd.findElement(By.linkText(user.getName())).click();
         wd.findElement(By.xpath("//input[@value='Reset Password']")).click();
     }
 }

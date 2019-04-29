@@ -102,4 +102,7 @@ public class ApplicationManager {
         return uiHelper;
     }
 
+    public DbHelper db() {
+        return new DbHelper();
+    }
 }
