@@ -15,10 +15,14 @@ import java.util.stream.Collectors;
 
 public class SoapHelper {
 
+    private final String adminLogin;
+    private final String adminPassword;
     private ApplicationManager app;
 
     public SoapHelper(ApplicationManager app) {
         this.app = app;
+        this.adminLogin = app.getProperty("web.adminLogin");
+        this.adminPassword = app.getProperty("web.adminPassword");
     }
 
     public Set<Project> getProjects() throws MalformedURLException, ServiceException, RemoteException {
@@ -49,5 +53,10 @@ public class SoapHelper {
                 .withSummary(createdIssueData.getSummary()).withDescription(createdIssueData.getDescription())
                 .withProject(new Project().withId(createdIssueData.getProject().getId().intValue())
                         .withName(createdIssueData.getProject().getName()));
+    }
+
+    public String getIssueStatus(int issueId) throws ServiceException, MalformedURLException, RemoteException {
+        MantisConnectPortType mc = getMantisConnect();
+        return mc.mc_issue_get(adminLogin, adminPassword, BigInteger.valueOf(issueId)).getStatus().getName();
     }
 }
