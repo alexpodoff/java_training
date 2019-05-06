@@ -1,5 +1,6 @@
 package ru.auto.addressbook.appmanager;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -38,7 +39,7 @@ public class ApplicationManager {
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
         dbHelper = new DbHelper();
 
-        if ("".equals(properties.getProperty("selenium server"))) {
+        if ("".equals(properties.getProperty("selenium.server"))) {
             switch (browser) {
                 case BrowserType.FIREFOX:
                     wd = new FirefoxDriver();
@@ -53,7 +54,8 @@ public class ApplicationManager {
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
-            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium server")), capabilities);
+            capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
         wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
